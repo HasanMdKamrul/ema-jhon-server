@@ -24,9 +24,25 @@ const client = new MongoClient(uri, {
   serverApi: ServerApiVersion.v1,
 });
 
-console.log(uri);
+const run = async () => {
+  try {
+    const productCollection = client.db("emaJhon").collection("products");
 
-console.log(uri);
+    // ** get all the data from the db
+
+    app.get("/products", async (req, res) => {
+      const query = {};
+
+      const cursor = productCollection.find(query);
+      const products = await cursor.toArray();
+
+      res.send(products);
+    });
+  } finally {
+  }
+};
+
+run().catch((err) => console.error(err));
 
 // ** app listen
 
